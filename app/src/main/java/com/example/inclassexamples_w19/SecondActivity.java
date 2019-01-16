@@ -3,7 +3,7 @@ package com.example.inclassexamples_w19;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class ActivitySecond extends AppCompatActivity {
+public class SecondActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
