@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         //This line says to load activity_main.xml in the res/layout folder:
         setContentView(R.layout.activity_main_linear);
 
