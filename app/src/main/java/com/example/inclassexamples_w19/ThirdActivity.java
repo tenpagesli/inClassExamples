@@ -33,9 +33,15 @@ public class ThirdActivity extends AppCompatActivity {
             dataToGoBack.putExtra("NextPageTyped", enterText.getText().toString());
 
             //Result 60 will represent the back button
-            setResult(60);
+            setResult(60, dataToGoBack);
             //This line goes back to the previous page, and sends 60 as the result.
             finish();
         });
+
+
+        Button save = (Button)findViewById(R.id.saveButton);
+        save.setOnClickListener ( bt -> {   startActivity( new Intent( ThirdActivity.this,
+                SharedPreferencesExample.class)  );   });
+
     }
 }

@@ -12,7 +12,7 @@
     <Button android:id="@+id/nextPageButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/secondPage" />
+        android:text="@string/goToSecondPage" />
     <TextView
         android:id="@+id/key_text"
         android:text="Type something below:"
@@ -28,6 +28,6 @@
     <Button android:id="@+id/thirdPageButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/thirdPage" />
+        android:text="@string/goToThirdPage" />
 
 </LinearLayout>

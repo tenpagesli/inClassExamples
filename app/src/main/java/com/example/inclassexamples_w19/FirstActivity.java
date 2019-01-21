@@ -48,6 +48,9 @@ public class FirstActivity extends AppCompatActivity {
             // resultCode will only be 60 if the user clicks on the back button on page 3 (ThirdActivity.java line 35)
             if(resultCode == 60)
             {
+                EditText et = (EditText)findViewById(R.id.value_text);
+                String fromPageThree = data.getStringExtra("NextPageTyped");
+                et.setText(fromPageThree);
                 Log.i("Back", "Message");
             }
         }
