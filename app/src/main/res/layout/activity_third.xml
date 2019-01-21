@@ -8,15 +8,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30dp"
-        android:text="@string/secondPage"/>
+        android:text="@string/thirdPage"/>
 
-    <Button android:id="@+id/previousPageButton"
+    <Button android:id="@+id/backButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/previousPage"/>
+        android:text="@string/back" />
     <TextView
         android:id="@+id/key_text"
-        android:text="You typed:"
+        android:text="On the other page, you typed:"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -25,5 +25,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <Button android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save" />
 
 </LinearLayout>

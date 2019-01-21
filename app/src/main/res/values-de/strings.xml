@@ -2,4 +2,6 @@
 <resources>
 
     <string name="Hello">Hello Germans!</string>
+    <string name="nextPage">Naechste Seite</string>
+    <string name="previousPage">Vorherige Seite</string>
 </resources>
