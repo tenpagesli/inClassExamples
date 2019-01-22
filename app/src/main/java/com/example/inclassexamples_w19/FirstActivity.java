@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 public class FirstActivity extends AppCompatActivity {
@@ -19,10 +21,12 @@ public class FirstActivity extends AppCompatActivity {
 
             //Give directions to go from this page, to SecondActivity
             Intent nextPage = new Intent(FirstActivity.this, SecondActivity.class);
-            
+
             //Now make the transition:
-            startActivity( nextPage );
+            startActivityForResult(nextPage, 2);
         });
+
+
 
         Button thirdPage = (Button)findViewById(R.id.thirdPageButton);
         thirdPage.setOnClickListener( c -> {
@@ -42,6 +46,8 @@ public class FirstActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        int i = 0;
+        i++;
         //if request code is 345, then we are coming back from ThirdActivity, as written on line 36
         if(requestCode == 345)
         {
@@ -60,6 +66,8 @@ public class FirstActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
     }
+
+
 
     @Override
     protected void onDestroy() {
