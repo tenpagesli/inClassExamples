@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 
 public class FirstActivity extends AppCompatActivity {
@@ -25,8 +23,6 @@ public class FirstActivity extends AppCompatActivity {
             //Now make the transition:
             startActivityForResult(nextPage, 2);
         });
-
-
 
         Button thirdPage = (Button)findViewById(R.id.thirdPageButton);
         thirdPage.setOnClickListener( c -> {
@@ -48,10 +44,10 @@ public class FirstActivity extends AppCompatActivity {
 
         int i = 0;
         i++;
-        //if request code is 345, then we are coming back from ThirdActivity, as written on line 36
+        //if request code is 345, then we are coming back from ThirdActivity, as written on line 38
         if(requestCode == 345)
         {
-            // resultCode will only be 60 if the user clicks on the back button on page 3 (ThirdActivity.java line 35)
+            // resultCode will only be 60 if the user clicks on the back button on page 3 (ThirdActivity.java line 39)
             if(resultCode == 60)
             {
                 EditText et = (EditText)findViewById(R.id.value_text);
