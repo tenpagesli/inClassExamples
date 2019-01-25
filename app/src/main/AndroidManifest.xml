@@ -11,10 +11,7 @@
         android:icon="@drawable/freeicon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity android:name=".SharedPreferencesExample"></activity>
-        <activity android:name=".ThirdActivity" />
-        <activity android:name=".SecondActivity" />
-        <activity android:name=".FirstActivity">
+        <activity android:name=".ListViewExample">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
