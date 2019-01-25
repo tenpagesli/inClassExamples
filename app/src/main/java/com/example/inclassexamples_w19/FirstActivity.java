@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 public class FirstActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,16 +17,17 @@ public class FirstActivity extends AppCompatActivity {
         setContentView(R.layout.activity_first);
 
         Button nextButton = (Button)findViewById(R.id.nextPageButton);
-        nextButton.setOnClickListener( b -> {
+
+        nextButton.setOnClickListener( (btn) -> {
 
             //Give directions to go from this page, to SecondActivity
             Intent nextPage = new Intent(FirstActivity.this, SecondActivity.class);
             
             //Now make the transition:
-            startActivity( nextPage );
+            startActivityForResult( nextPage , 1000);
         });
 
-        Button thirdPage = (Button)findViewById(R.id.thirdPageButton);
+        Button thirdPage = (Button) findViewById(R.id.thirdPageButton);
         thirdPage.setOnClickListener( c -> {
 
             Intent nextPage = new Intent(FirstActivity.this, ThirdActivity.class);
@@ -39,9 +42,11 @@ public class FirstActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+int i = 0;
+i++;
         //if request code is 345, then we are coming back from ThirdActivity, as written on line 36
         if(requestCode == 345)
         {
