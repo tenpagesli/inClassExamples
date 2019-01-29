@@ -43,8 +43,9 @@ public class ThirdActivity extends AppCompatActivity {
 
 
         Button save = (Button)findViewById(R.id.saveButton);
-        save.setOnClickListener ( bt -> {   startActivity( new Intent( ThirdActivity.this,
-                SharedPreferencesExample.class)  );   });
+        save.setOnClickListener ( bt -> {
+            startActivity( new Intent( ThirdActivity.this, SharedPreferencesExample.class)  );
+        });
 
     }
 }
