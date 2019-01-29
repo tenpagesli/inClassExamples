@@ -22,6 +22,7 @@ public class SharedPreferencesExample extends AppCompatActivity {
         typeField.setText(savedString);
     }
 
+
     @Override
     protected void onPause() {
         super.onPause();
