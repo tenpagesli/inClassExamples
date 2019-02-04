@@ -14,7 +14,7 @@
     <string name="goToThirdPage">Go To Third Page</string>
     <string name="back">Back</string>
     <string name="save">Save</string>
-
+    <string name="insert">Insert</string>
     <string name="typeHere">Type here</string>
     <string name="typeHereToSave">Type something here and it will be saved for next time</string>
 </resources>
