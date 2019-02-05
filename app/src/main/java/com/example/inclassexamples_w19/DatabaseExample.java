@@ -1,7 +1,10 @@
 package com.example.inclassexamples_w19;
 
+import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +25,9 @@ import java.util.List;
 public class DatabaseExample extends AppCompatActivity {
 
     ArrayList<Contact> contactsList = new ArrayList<>();
+    private static int ACTIVITY_VIEW_CONTACT = 33;
+    int positionClicked = 0;
+    MyOwnAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,36 +45,104 @@ public class DatabaseExample extends AppCompatActivity {
         MyDatabaseOpenHelper dbOpener = new MyDatabaseOpenHelper(this);
         SQLiteDatabase db = dbOpener.getWritableDatabase();
 
+        //query all the results from the database:
         String [] columns = {MyDatabaseOpenHelper.COL_ID, MyDatabaseOpenHelper.COL_EMAIL, MyDatabaseOpenHelper.COL_NAME};
-
         Cursor results = db.query(false, MyDatabaseOpenHelper.TABLE_NAME, columns, null, null, null, null, null, null);
-        int numResultsFound = results.getCount();
 
+        //find the column indices:
         int emailColumnIndex = results.getColumnIndex(MyDatabaseOpenHelper.COL_EMAIL);
         int nameColIndex = results.getColumnIndex(MyDatabaseOpenHelper.COL_NAME);
         int idColIndex = results.getColumnIndex(MyDatabaseOpenHelper.COL_ID);
 
-        //iterate over the results:
-        while(!results.isAfterLast())
+        //iterate over the results, return true if there is a next item:
+        while(results.moveToNext())
         {
             String name = results.getString(nameColIndex);
             String email = results.getString(emailColumnIndex);
             long id = results.getLong(idColIndex);
+
+            //add the new Contact to the array list:
             contactsList.add(new Contact(name, email, id));
         }
 
-        ListAdapter adt = new MyOwnAdapter();
-        theList.setAdapter(adt);
+        //create an adapter object and send it to the listVIew
+        myAdapter = new MyOwnAdapter();
+        theList.setAdapter(myAdapter);
 
 
-        
         //This listens for items being clicked in the list view
         theList.setOnItemClickListener(( parent,  view,  position,  id) -> {
             Log.e("you clicked on :" , "item "+ position);
+            //save the position in case this object gets deleted or updated
+            positionClicked = position;
 
-
-        ((MyOwnAdapter) adt).notifyDataSetChanged();
+            //When you click on a row, open selected contact on a new page (ViewContact)
+            Contact chosenOne = contactsList.get(position);
+            Intent nextPage = new Intent(DatabaseExample.this, ViewContact.class);
+            nextPage.putExtra("Name", chosenOne.getName());
+            nextPage.putExtra("Email", chosenOne.getEmail());
+            nextPage.putExtra("Id", id);
+            startActivityForResult(nextPage, ACTIVITY_VIEW_CONTACT);
         });
+
+
+        //Listen for an insert button click event:
+        insertButton.setOnClickListener( click ->
+        {
+            //get the email and name that were typed
+            String name = nameEdit.getText().toString();
+            String email = emailEdit.getText().toString();
+
+
+            //add to the database and get the new ID
+            ContentValues newRowValues = new ContentValues();
+            //put string name in the NAME column:
+            newRowValues.put(MyDatabaseOpenHelper.COL_NAME, name);
+            //put string email in the EMAIL column:
+            newRowValues.put(MyDatabaseOpenHelper.COL_EMAIL, email);
+            //insert in the database:
+            long newId = db.insert(MyDatabaseOpenHelper.TABLE_NAME, null, newRowValues);
+
+            //now you have the newId, you can create the Contact object
+            Contact newContact = new Contact(name, email, newId);
+
+            //add the new contact to the list:
+            contactsList.add(newContact);
+            //update the listView:
+            myAdapter.notifyDataSetChanged();
+
+            //clear the EditText fields:
+            nameEdit.setText("");
+            emailEdit.setText("");
+
+            //show a notification: first parameter is any view on screen. second parameter is the text. Third parameter is the length (SHORT/LONG)
+            Snackbar.make(insertButton, "Inserted item id:"+newId, Snackbar.LENGTH_LONG).show();
+
+        });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //If you're coming back from the view contact activity
+        if(requestCode == ACTIVITY_VIEW_CONTACT)
+        {
+            switch(resultCode) {
+                //if you clicked delete, remove the item you clicked from the array list and update the listview:
+                case ViewContact.PUSHED_DELETE:
+                    contactsList.remove(positionClicked);
+                    myAdapter.notifyDataSetChanged();
+                    break;
+
+                //if you clicked update, then the other activity should have sent back the new name and email in the Intent object:
+                //update the selected object and update the listView:
+                case ViewContact.PUSHED_UPDATE:
+                    Contact oldContact = contactsList.get(positionClicked);
+                    oldContact.update(data.getStringExtra("Name"), data.getStringExtra("Email"));
+                    myAdapter.notifyDataSetChanged();
+                    break;
+            }
+        }
     }
 
     //This class needs 4 functions to work properly:
@@ -89,7 +163,6 @@ public class DatabaseExample extends AppCompatActivity {
 
             View newView = inflater.inflate(R.layout.contact_row, parent, false );
 
-
             Contact thisRow = getItem(position);
             TextView rowName = (TextView)newView.findViewById(R.id.row_name);
             TextView rowEmail = (TextView)newView.findViewById(R.id.row_email);
@@ -105,7 +178,7 @@ public class DatabaseExample extends AppCompatActivity {
 
         public long getItemId(int position)
         {
-            return position;
+            return getItem(position).getId();
         }
     }
 

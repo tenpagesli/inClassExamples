@@ -11,6 +11,7 @@
         android:icon="@drawable/freeicon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
+        <activity android:name=".ViewContact"></activity>
         <activity android:name=".DatabaseExample">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -14,6 +14,12 @@ public class Contact {
         id = i;
     }
 
+    public void update(String n, String e)
+    {
+        name = n;
+        email = e;
+    }
+
     /**Chaining constructor: */
     public Contact(String n, String e) { this(n, e, 0);}
 
