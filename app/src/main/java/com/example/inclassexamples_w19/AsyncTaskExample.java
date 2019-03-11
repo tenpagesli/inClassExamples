@@ -28,14 +28,18 @@ public class AsyncTaskExample extends AppCompatActivity {
         setContentView(R.layout.activity_async_example);
 
         DataFetcher networkThread = new DataFetcher();
-        networkThread.execute("http://torunski.ca/CST2335.xml"); //this starts doInBackground on other thread
+        networkThread.execute("http://torunski.ca/CST2335_XML.xml"); //this starts doInBackground on other thread
 
         messageBox = (EditText)findViewById(R.id.messageBox);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);  //show the progress bar
     }
 
-    //                                          Type1    Type2    Type3
+
+
+
+
+    // a subclass of AsyncTask                  Type1    Type2    Type3
     private class DataFetcher extends AsyncTask<String, Integer, String>
     {
         @Override
