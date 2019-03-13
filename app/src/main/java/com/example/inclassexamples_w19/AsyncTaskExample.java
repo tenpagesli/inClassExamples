@@ -10,10 +10,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -28,7 +31,7 @@ public class AsyncTaskExample extends AppCompatActivity {
         setContentView(R.layout.activity_async_example);
 
         DataFetcher networkThread = new DataFetcher();
-        networkThread.execute("http://torunski.ca/CST2335_XML.xml"); //this starts doInBackground on other thread
+        networkThread.execute( "http://torunski.ca/CST2335_XML.xml" ); //this starts doInBackground on other thread
 
         messageBox = (EditText)findViewById(R.id.messageBox);
         progressBar = (ProgressBar)findViewById(R.id.progressBar);
@@ -43,7 +46,7 @@ public class AsyncTaskExample extends AppCompatActivity {
     private class DataFetcher extends AsyncTask<String, Integer, String>
     {
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(String ... params) {
 
 
             try {
@@ -68,7 +71,7 @@ public class AsyncTaskExample extends AppCompatActivity {
                     if(xpp.getEventType() == XmlPullParser.START_TAG)
                     {
                         String tagName = xpp.getName(); //get the name of the starting tag: <tagName>
-                        if(tagName.equals("AMessage"))
+                        if(tagName.equals("dt"))
                         {
                             String parameter = xpp.getAttributeValue(null, "message");
                             Log.e("AsyncTask", "Found parameter message: "+ parameter);
@@ -96,6 +99,33 @@ public class AsyncTaskExample extends AppCompatActivity {
 
                     xpp.next(); //advance to next XML event
                 }
+
+                //End of XML reading
+
+                //Start of JSON reading of UV factor:
+
+                //create the network connection:
+                URL UVurl = new URL("http://api.openweathermap.org/data/2.5/uvi?appid=7e943c97096a9784391a981c4d878b22&lat=45.348945&lon=-75.759389");
+                HttpURLConnection UVConnection = (HttpURLConnection) UVurl.openConnection();
+                inStream = UVConnection.getInputStream();
+
+                //create a JSON object from the response
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "UTF-8"), 8);
+                StringBuilder sb = new StringBuilder();
+
+                String line = null;
+                while ((line = reader.readLine()) != null)
+                {
+                    sb.append(line + "\n");
+                }
+                String result = sb.toString();
+
+                //now a JSON table:
+                JSONObject jObject = new JSONObject(result);
+                double aDouble = jObject.getDouble("value");
+                Log.i("UV is:", ""+ aDouble);
+
+                //END of UV rating
 
                 Thread.sleep(2000); //pause for 2000 milliseconds to watch the progress bar spin
 
