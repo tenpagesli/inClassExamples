@@ -19,18 +19,8 @@ public class DetailFragment extends Fragment {
     private Bundle dataFromActivity;
     private long id;
 
-    public boolean isTablet() {
-        return isTablet;
-    }
+    public void setTablet(boolean tablet) { isTablet = tablet; }
 
-    public void setTablet(boolean tablet) {
-        isTablet = tablet;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,12 +32,15 @@ public class DetailFragment extends Fragment {
         // Inflate the layout for this fragment
         View result =  inflater.inflate(R.layout.fragment_detail, container, false);
 
+        //show the message
         TextView message = (TextView)result.findViewById(R.id.message);
         message.setText(dataFromActivity.getString(FragmentExample.ITEM_SELECTED));
 
+        //show the id:
         TextView idView = (TextView)result.findViewById(R.id.idText);
         idView.setText("ID=" + id);
 
+        // get the delete button, and add a click listener:
         Button deleteButton = (Button)result.findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener( clk -> {
 
@@ -60,7 +53,7 @@ public class DetailFragment extends Fragment {
                 // this is the object to be removed, so remove(this):
                 parent.getSupportFragmentManager().beginTransaction().remove(this).commit();
             }
-
+            //for Phone:
             else //You are only looking at the details, you need to go back to the previous list page
             {
                 EmptyActivity parent = (EmptyActivity) getActivity();
@@ -73,5 +66,4 @@ public class DetailFragment extends Fragment {
         });
         return result;
     }
-
 }

@@ -30,7 +30,7 @@ public class FragmentExample extends AppCompatActivity {
         setContentView(R.layout.fragment_example);
 
         ListView theList = (ListView)findViewById(R.id.theList);
-        boolean isTablet = findViewById(R.id.fragmentLocation) != null;
+        boolean isTablet = findViewById(R.id.fragmentLocation) != null; //check if the FrameLayout is loaded
 
         theAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, source);
         theList.setAdapter( theAdapter );
@@ -43,20 +43,20 @@ public class FragmentExample extends AppCompatActivity {
 
             if(isTablet)
             {
-                DetailFragment dFragment = new DetailFragment();
-                dFragment.setArguments( dataToPass );
-                dFragment.setTablet(true);
+                DetailFragment dFragment = new DetailFragment(); //add a DetailFragment
+                dFragment.setArguments( dataToPass ); //pass it a bundle for information
+                dFragment.setTablet(true);  //tell the fragment if it's running on a tablet or not
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.fragmentLocation, dFragment)
-                        .addToBackStack("AnyName")
-                        .commit();
+                        .add(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
+                        .addToBackStack("AnyName") //make the back button undo the transaction
+                        .commit(); //actually load the fragment.
             }
             else //isPhone
             {
                 Intent nextActivity = new Intent(FragmentExample.this, EmptyActivity.class);
-                nextActivity.putExtras(dataToPass);
-                startActivityForResult(nextActivity, EMPTY_ACTIVITY);
+                nextActivity.putExtras(dataToPass); //send data to next activity
+                startActivityForResult(nextActivity, EMPTY_ACTIVITY); //make the transition
             }
         });
     }
@@ -66,14 +66,13 @@ public class FragmentExample extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == EMPTY_ACTIVITY)
         {
-            if(resultCode == RESULT_OK)
+            if(resultCode == RESULT_OK) //if you hit the delete button instead of back button
             {
                 long id = data.getLongExtra(ITEM_ID, 0);
                 deleteMessageId((int)id);
             }
         }
     }
-
 
     public void deleteMessageId(int id)
     {
