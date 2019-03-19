@@ -3,31 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30dp"
-        android:text="@string/firstPage"/>
+        android:text="@string/thirdPage"/>
 
-    <Button android:id="@+id/nextPageButton"
+    <Button android:id="@+id/backButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/goToSecondPage" />
+        android:text="@string/back" />
     <TextView
         android:id="@+id/key_text"
-        android:text="Type something below:"
+        android:text="On the other page, you typed:"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/value_text"
-        android:hint="@string/typeHere"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <Button android:id="@+id/thirdPageButton"
+    <Button android:id="@+id/saveButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/goToThirdPage" />
+        android:text="@string/save" />
 
 </LinearLayout>
