@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 public class FirstActivity extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,14 +15,13 @@ public class FirstActivity extends AppCompatActivity {
         setContentView(R.layout.activity_first);
 
         Button nextButton = (Button)findViewById(R.id.nextPageButton);
-
-        nextButton.setOnClickListener( (btn) -> {
+        nextButton.setOnClickListener( b -> {
 
             //Give directions to go from this page, to SecondActivity
             Intent nextPage = new Intent(FirstActivity.this, SecondActivity.class);
             
             //Now make the transition:
-            startActivityForResult( nextPage , 1000);
+            startActivityForResult(nextPage, 2);
         });
 
         Button thirdPage = (Button) findViewById(R.id.thirdPageButton);
@@ -42,7 +39,6 @@ public class FirstActivity extends AppCompatActivity {
         });
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 int i = 0;
@@ -50,7 +46,7 @@ i++;
         //if request code is 345, then we are coming back from ThirdActivity, as written on line 36
         if(requestCode == 345)
         {
-            // resultCode will only be 60 if the user clicks on the back button on page 3 (ThirdActivity.java line 35)
+            // resultCode will only be 60 if the user clicks on the back button on page 3 (ThirdActivity.java line 39)
             if(resultCode == 60)
             {
                 EditText et = (EditText)findViewById(R.id.value_text);

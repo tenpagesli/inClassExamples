@@ -8,6 +8,8 @@ import android.widget.EditText;
 
 public class ThirdActivity extends AppCompatActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -15,6 +17,7 @@ public class ThirdActivity extends AppCompatActivity {
 
         // get the intent that got us here
         Intent fromPrevious = getIntent();
+
         String previousTyped = fromPrevious.getStringExtra("typed");
         String someText = fromPrevious.getStringExtra("ItemOne");
         int extraInt = fromPrevious.getIntExtra("ItemTwo", 0);
@@ -40,8 +43,9 @@ public class ThirdActivity extends AppCompatActivity {
 
 
         Button save = (Button)findViewById(R.id.saveButton);
-        save.setOnClickListener ( bt -> {   startActivity( new Intent( ThirdActivity.this,
-                SharedPreferencesExample.class)  );   });
+        save.setOnClickListener ( bt -> {
+            startActivity( new Intent( ThirdActivity.this, SharedPreferencesExample.class)  );
+        });
 
     }
 }

@@ -14,7 +14,7 @@ public class SecondActivity extends AppCompatActivity {
         Button btn = (Button)findViewById(R.id.previousPageButton);
 
         btn.setOnClickListener( b -> {
-            setResult(50);
+            setResult(50,null);
             //This line goes back to the previous page, and sends 50 as the result.
             finish();
         });
