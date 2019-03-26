@@ -10,6 +10,8 @@ public class NextActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next);
         // branch 2 comment
+        //this is my comment
 
+      
     }
 }
