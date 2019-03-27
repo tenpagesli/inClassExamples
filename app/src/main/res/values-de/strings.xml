@@ -4,4 +4,7 @@
     <string name="Hello">Hello Germans!</string>
     <string name="nextPage">Naechste Seite</string>
     <string name="previousPage">Vorherige Seite</string>
+    <string name="button">Ein Knopf wort</string>
+    <string name="secondPage">zweite seite</string>
+    <string name="save">Speichern</string>
 </resources>
