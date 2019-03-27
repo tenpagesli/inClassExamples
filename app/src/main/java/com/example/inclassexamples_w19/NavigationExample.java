@@ -71,14 +71,14 @@ public class NavigationExample extends AppCompatActivity
             Intent resultIntent = new Intent(this, NextActivity.class);
             PendingIntent option1Intent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-
             // Handle the camera action
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
                             .setSmallIcon(R.drawable.ic_menu_send)
                             .setAutoCancel(true)
                             .setContentTitle("My notification")
-                            .addAction(R.drawable.ic_menu_send, "Option 1", option1Intent)
+
+                            .addAction(R.drawable.ic_menu_send, "Go to Next", option1Intent)
                             .addAction(R.drawable.flag, "Option 2", option1Intent)
                             .setContentText("Hello World!");
             PendingIntent resultPendingIntent = PendingIntent.getActivity( this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
