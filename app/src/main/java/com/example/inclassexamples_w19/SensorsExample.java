@@ -1,56 +1,109 @@
 package com.example.inclassexamples_w19;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.hardware.camera2.CameraManager;
+import android.os.Vibrator;
+import android.os.VibrationEffect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
+
 
 public class SensorsExample extends AppCompatActivity {
 
-    private TextView stepCountView = null;
-    private SensorManager mSensorManager;
-    private Sensor mSensor;
+
+    SensorManager mSensorManager = null;
+    Sensor mSensor = null;
+    boolean flashLightStatus = false;
+    boolean deviceHasCameraFlash = false;
+
+    CameraManager camManager = null;
+    String cameraId = null;
+
+    EditText xEditText , yEditText, zEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensors_example);
 
-        stepCountView = (TextView)findViewById(R.id.stepId);
+        //load the edit text from the screen. We will write to them later.
+        xEditText = (EditText)findViewById(R.id.x_values);
+        yEditText = (EditText)findViewById(R.id.y_values);
+        zEditText = (EditText)findViewById(R.id.z_values);
 
 
         mSensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
-        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
 
         if(mSensor != null) //might not have a step counter
-            mSensorManager.registerListener(new StepCountListener(), mSensor, SensorManager.SENSOR_DELAY_NORMAL);
+            mSensorManager.registerListener(new OrientationListener(), mSensor, SensorManager.SENSOR_DELAY_NORMAL);
 
 
+        //Flashlight example
+        // flashlight code  example.
 
-        Button flashButton = (Button)findViewById(R.id.flashlightButton);
-        flashButton.setOnClickListener( e ->
-        {
+            camManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+            deviceHasCameraFlash = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+            Button flashButton = (Button) findViewById(R.id.flashlight_button);
+            flashButton.setOnClickListener(e ->
+            {
+                try {
+                    cameraId = camManager.getCameraIdList()[0]; // Usually front camera is at 0 position.
+                    if(deviceHasCameraFlash) {
+                        flashLightStatus = !flashLightStatus;  //flip true to false, or false to true
+                        camManager.setTorchMode(cameraId, flashLightStatus);
+                    }
+                }catch(Exception ex){
+                    Log.e("Error", ex.getMessage());
+                }
+            });
 
+        //end of flashlight example
+
+        //Vibration example. Look at powerpoint slides on vibration
+        Button vibrateButton = (Button)findViewById(R.id.vibrate_button);
+        Vibrator vibrateMotor = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+
+        vibrateButton.setOnClickListener( e ->{
+
+            long [] pattern = new long[]{500, 500, 500, 500};
+            int [] amplitudes = new int[] {0, 255, 0, 128};
+            vibrateMotor.vibrate(VibrationEffect.createWaveform(pattern, amplitudes, -1) );
+
+            vibrateMotor.vibrate(pattern, -1);
         });
+        //end of vibration example
+
+
+
     }
 
 
-    private class StepCountListener implements SensorEventListener{
-        @Override
-        public void onSensorChanged(SensorEvent sensorEvent)
-        {
-            Log.i("Step count:", "Step count is now:" + sensorEvent.values[0]);
-        }
-
+    class OrientationListener implements SensorEventListener {
         @Override
         public void onAccuracyChanged(Sensor sensor, int i) {
-
+            // Do something here if sensor accuracy changes.
+            // You must implement this callback in your code.
         }
+
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+
+            xEditText.setText("X: "+x);
+            yEditText.setText("Y: "+y);
+            zEditText.setText("Z: "+z);
+        }
+
     }
 }

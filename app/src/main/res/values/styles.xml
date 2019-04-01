@@ -11,7 +11,7 @@
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:textColorPrimary">#00FF55</item>
+        <item name="android:textColorPrimary">#000000</item>
     </style>
 
 
