@@ -26,14 +26,13 @@ import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class Button3UnitTest {
+public class UnitTestingExampleTest2 {
 
     @Rule
     public ActivityTestRule<UnitTestingExample> mActivityTestRule = new ActivityTestRule<>(UnitTestingExample.class);
 
     @Test
-    public void button3UnitText() {
-
+    public void unitTestingExampleTest2() {
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.button3), withText("Test 3"),
                         childAtPosition(
@@ -54,23 +53,6 @@ public class Button3UnitTest {
                         isDisplayed()));
         editText.check(matches(withText("You clicked button 3")));
     }
-
-    @Test
-    public void button2UnitText() {
-
-        //Find the view with id button2:
-        ViewInteraction appCompatButton = onView( allOf(withId(R.id.button2)));
-
-        //Click the button:
-        appCompatButton.perform(click());
-
-        //Find the view with id resultsWindow
-        ViewInteraction editText = onView( allOf(withId(R.id.resultsWindow)));
-
-        //Assert that the view has text "You clicked button 2":
-        editText.check(matches(withText("You clicked button 2")));
-    }
-
 
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {

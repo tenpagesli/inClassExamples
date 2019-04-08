@@ -12,6 +12,8 @@ import android.os.VibrationEffect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -32,6 +34,12 @@ public class SensorsExample extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+      //  requestWindowFeature(Window.FEATURE_NO_TITLE);
+      //  getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
         setContentView(R.layout.activity_sensors_example);
 
         //load the edit text from the screen. We will write to them later.
@@ -41,10 +49,10 @@ public class SensorsExample extends AppCompatActivity {
 
 
         mSensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
-        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
 
         if(mSensor != null) //might not have a step counter
-            mSensorManager.registerListener(new OrientationListener(), mSensor, SensorManager.SENSOR_DELAY_NORMAL);
+            mSensorManager.registerListener(new LightListener(), mSensor, SensorManager.SENSOR_DELAY_NORMAL);
 
 
         //Flashlight example
@@ -74,10 +82,10 @@ public class SensorsExample extends AppCompatActivity {
 
         vibrateButton.setOnClickListener( e ->{
 
-            long [] pattern = new long[]{500, 500, 500, 500};
+            long [] pattern = new long[]{500, 2500, 500, 500};
             int [] amplitudes = new int[] {0, 255, 0, 128};
-            vibrateMotor.vibrate(VibrationEffect.createWaveform(pattern, amplitudes, -1) );
-
+            // vibrateMotor.vibrate(VibrationEffect.createWaveform(pattern, amplitudes, -1) );
+//older apis:
             vibrateMotor.vibrate(pattern, -1);
         });
         //end of vibration example
@@ -87,7 +95,7 @@ public class SensorsExample extends AppCompatActivity {
     }
 
 
-    class OrientationListener implements SensorEventListener {
+    class LightListener implements SensorEventListener {
         @Override
         public void onAccuracyChanged(Sensor sensor, int i) {
             // Do something here if sensor accuracy changes.

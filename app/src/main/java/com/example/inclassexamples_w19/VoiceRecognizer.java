@@ -85,9 +85,9 @@ public class VoiceRecognizer extends AppCompatActivity {
                 for (String s : data)
                 {
                     Log.d("RESULTS", "result " + s);
-                    str.append(s );
+                    str.append(s  + "\n");
                 }
-                resultsView.setText( "results: " + data.get(0) );
+                resultsView.setText( "results: " + str.toString() );
             }
 
         });
